@@ -1,0 +1,20 @@
+<h4><a href="{% url 'list' %}">뒤로가기</a></h4>
+<h4>제목 : {{ post.title }}</h4>
+<h4>내용 : {{ post.content }}</h4>
+
+<br/>
+<a href="{% url 'commentcreate' post.id %}">댓글 작성하기</a>
+
+<form method ='POST'>
+    {% csrf_token %}
+    {{form}}
+    <button type='submit'>댓글 등록</button>
+</form>
+
+<br/>
+<h4>댓글 목록</h4>
+{% for comment in post.comment_set.all %}<br>
+    {{comment.content}}
+    <a href="{% url 'commentupdate' post.id comment.id %}">수정</a>
+    <a href="{% url 'commentdelete' post.id comment.id %}" onclick="return confirm('정말 삭제하시겠습니까?')">삭제</a>
+{% endfor %}
